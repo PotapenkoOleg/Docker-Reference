@@ -131,29 +131,29 @@ You can assign your own name to any container when you start it
 
 By the way you shouldn't type all `ID` or `NAME`. Most of the time first 2-3 letters should be fine
 
-`IMAGE` column contains image for your container
+`IMAGE` column contains **image** for your **container**
 
-`COMMAND` is main command(process) this container executes
+`COMMAND` is main command(process) this **container** executes
 
 ---
 
-- `docker start [IMAGE_ID]` This command starts new container from `IMAGE_ID`. 
-  You can get ubuntu IMAGE_ID with `docker image ls`. Start it. 
-  Exit ubuntu by typing `exit` in terminal
+- `docker start [IMAGE_ID]` this command starts new **container** from `IMAGE_ID`. 
+  You can get ubuntu IMAGE_ID with `docker image ls`. Then start it. 
+  You can exit ubuntu anytime by typing `exit` in terminal
   
   
-- `docker attach [CONTAINER_ID]` you can open terminal for running container with this command.
+- `docker attach [CONTAINER_ID]` you can open terminal for running **container** with this command.
 Use `docker ps` to find your `CONTAINER_ID`. Type `exit` to exit. 
-  It closes container if you running it in interactive mode
+  It closes **container** if you running it in interactive mode
   
   
-- `docker exec -it [CONTAINER_ID] [COMMAND]` interactively runs command on running container.
+- `docker exec -it [CONTAINER_ID] [COMMAND]` interactively runs command on running **container**.
 *Example:* `docker exec -it 39 ps -ef` runs `ps -ef` on container `39..`
   
 
-- `docker logs [CONTAINER_ID] -f` interactively shows console output for your running image. 
+- `docker logs [CONTAINER_ID] -f` interactively shows console output for your running **container**. 
 Option `-f` show output continuously much like `more -f` linux command. 
-  Try to run `ls` command in you PowerShell ubuntu image. 
+  Try to run `ls` command in you PowerShell ubuntu **container**. 
   Press `CTRL+C` to stop showing output.
   
 
@@ -167,23 +167,23 @@ Option `-f` show output continuously much like `more -f` linux command.
 
 
 - `docker rmi [IMAGE_ID]` remove **image**. 
-  You **must** stop and remove all **containers** using this image.
-  Option `-f` forcefully remove image, but it's not recommended and can damage your Docker installation
+  You **must** stop and remove all **containers** using this **image**.
+  Option `-f` forcefully removes image, but it's not recommended and can damage your Docker installation
 
 ---
 *Example:* Running named ubuntu image as demon with automatic container removal
 
-`docker run -it -d --rm --name my-ubuntu ubuntu /bin/bash` This command runs interactive ubuntu image as demon.
+`docker run -it -d --rm --name my-ubuntu ubuntu /bin/bash` This command runs interactive ubuntu **container** as demon.
 You can open terminal with `docker attach` or execute commands with `docker exec`
 
-- Option `-d` means 'run as demon(service)' and not block my current terminal.
+- Option `-d` means 'run as demon(service)' and not block current terminal.
 You should get container ID like this `7ccdfb2a0a472bc30fab9f8810f01bb28b8985b6269f0f81e2fd302aabcc209f`
 
 
 - Option `--rm` means remove **container** when it finished
 
 
-- Option `--name` allows you provide meaningful name for your image. In this case `my-ubuntu`
+- Option `--name` allows you to provide meaningful name for your image. In this case `my-ubuntu`
 
 
 - `ubuntu` is the image name
@@ -195,7 +195,7 @@ You should get container ID like this `7ccdfb2a0a472bc30fab9f8810f01bb28b8985b62
 
 ### Fantastic Images and Where to Find Them
 
-To find image you need you should visit [Docker Hub](https://hub.docker.com/)
+To find images you should visit [Docker Hub](https://hub.docker.com/)
 
 Then you can use search in top left conner. Try `postgres` or `amazon` or `Windows Server Core`
 (*Please note `Windows Server Core` could have it's own **License***)
@@ -223,6 +223,8 @@ There are 3 common images used as starters
 [Buster](https://en.wikipedia.org/wiki/Debian_version_history#Debian_10_(Buster)) is code name for 
 [Debian](https://en.wikipedia.org/wiki/Debian) version 10, 
 which is current version
+
+
 ---
 
 - *Alpine* is the smallest one and it just 40 MB. 
