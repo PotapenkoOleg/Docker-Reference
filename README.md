@@ -91,6 +91,7 @@ Let start with some basic terminology and ideas behind Docker
 ---
 NOTE: If you in linux and didn't setup Docker as a non-root user,
 you should use `sudo` in all of your commands like this `sudo docker run -it ubuntu /bin/bash`
+
 ---
 
 Explanation: `run` starts your **container** from **image** called *ubuntu*.
