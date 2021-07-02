@@ -376,7 +376,7 @@ to connect to `postgres` database
 - Now run `CREATE DATABASE test;`. You should see new database
 
 
-- Database `test` survives restart. Yo can run `docker stop my-postgres` and `docker start my-postgres` to see this
+- Database `test` survives restart. You can run `docker stop my-postgres` and `docker start my-postgres` to see this
 
 
 - Data, WALs and configs available on host machine in `C:\docker\postgres\pgdata` directory
