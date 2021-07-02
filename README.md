@@ -57,7 +57,7 @@ Let start with some basic terminology and ideas behind Docker
 - Docker **container** is running instance of your image.
   For example, you can start many notepad instances and all of them would be different. 
   Same apples to containers. 
-  You can run two containers with the same application as database 
+  You can run two **containers** with the same application **image** like database 
 
 
 - Docker ***runs only one process in container***. 
