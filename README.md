@@ -322,7 +322,7 @@ You can use command like this instead `docker run -d -p 8080:80 -v /c/docker:/va
 - Open [http://localhost:8080/](http://localhost:8080/) You should see "It works!" page from Apache
 
 
-- Now open `C:\docker` and create file `index.php`. Just use this command `New-Item index.php -type file`
+- Now open `C:\docker` and create file `index.php`. Use this command `New-Item index.php -type file` in PowerShell
 
 
 - Open `index.php` and add `<?php phpinfo(); ?>'\` on the first line and save
@@ -334,9 +334,9 @@ You can use command like this instead `docker run -d -p 8080:80 -v /c/docker:/va
 
 ### Demo. Running postgres database in Docker
 
-This time we're going to run [postgres](https://hub.docker.com/_/postgres) database as docker container 
+This time we're going to run [postgres](https://hub.docker.com/_/postgres) database as docker **container** 
 
-- As always open PowerShell and `cd C:\docker` on your Windows machine
+- Open PowerShell and `cd C:\docker` on your Windows machine
 
 
 - Run this command `mkdir postgres` to create directory for postgres data files and config
@@ -354,7 +354,7 @@ docker run -d \
 postgres
 ```
 
-- Option `-e` means 'set environment variable inside container'.
+- Option `-e` means 'set environment variable inside container'
 
 
 - `POSTGRES_PASSWORD` and `PGDATA` predefined variables from [postgres](https://hub.docker.com/_/postgres) Docker documentation
@@ -370,7 +370,7 @@ to connect to `postgres` database
 - Run `select version();` to make sure it works and shows you something like `PostgreSQL 13.3 (Debian 13.3-1.pgdg100+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 8.3.0-6) 8.3.0, 64-bit`
 
 
-- Vesion should be `Debian`, not `Windows`
+- Version should contain `Debian`, not `Windows`
 
 
 - Now run `CREATE DATABASE test;`. You should see new database
