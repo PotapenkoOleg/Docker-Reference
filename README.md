@@ -250,7 +250,7 @@ So you never get error because `stdlib.so` is missing
 - It has all tools, so debug is easy. It just plain old linux
 
 
-- It contains package manager, so installing addition soft like python's `pipenv` is not an issue 
+- It contains package manager, so installing additional software like python's `pipenv` is not an issue 
 
 
 - It shared among all your images. So if you install [postgres 13.3-buster](https://hub.docker.com/_/postgres) 
@@ -263,7 +263,7 @@ So you never get error because `stdlib.so` is missing
 
 Each image can have multiple names known as 'tags' in addition to image hash that uniquely identifies image.
 
-For instance: [python](https://hub.docker.com/_/python) image can have many tags like this `3.9.6-buster, 3.9-buster, 3-buster, buster`
+For instance, [python](https://hub.docker.com/_/python) image can have many tags like this `3.9.6-buster, 3.9-buster, 3-buster, buster`
 
 You can use either name since all of them refers to the same image
 
@@ -298,9 +298,9 @@ For instance command `docker run -d -p 7777:80 httpd` runs Apache on **host** po
 `docker run -it -v /c/docker:/root ubuntu /bin/bash` This command mounts `C:\docker` directory on Windows to `/root` directory in `ubuntu` image
 
 
-You can run `cd /root` inside your Docker container and run `ps -ef >> ps.txt` to get linux process list in your `C:\docker` Windows directory
+You can run `cd /root` inside your Docker **container** and run `ps -ef >> ps.txt` to get linux process list in your `C:\docker` Windows directory
 
-This file will be available on linux and Windows even after container stop/restart
+This file will be available on linux and Windows even after **container** stop/restart
 
 ### Demo. Using Apache with PHP
 
