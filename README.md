@@ -89,7 +89,7 @@ Let start with some basic terminology and ideas behind Docker
 `docker run -it ubuntu /bin/bash`
 
 ---
-NOTE: If you in linux and didn't setup Docker as a non-root user,
+NOTE: If you on linux and didn't setup Docker as a non-root user,
 you should use `sudo` in all of your commands like this `sudo docker run -it ubuntu /bin/bash`
 
 ---
@@ -118,11 +118,11 @@ NOTE: use `docker COMMAND --help` to get more information about command and it's
 
 ---
 
-- `docker image ls` shows all images in you Docker. 
+- `docker image ls` shows all **images** in you Docker. 
   `IMAGE ID` is the most important column. It allows you to reference your image using this ID
   
 
-- `docker ps -a` shows all images. If you need only running just remove `-a` option like this `docker ps`
+- `docker ps -a` shows all **containers**. If you need only running **containers** just remove `-a` option like this `docker ps`
 
 ---
 NOTE: Please take a look at `CONTAINER ID` column - this is you **container** handle to manage container.
