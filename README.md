@@ -530,6 +530,13 @@ RUN pipenv install
 CMD [ "pipenv", "run", "python", "./main.py" ]
 ```
 
+---
+***NOTE***:
+I'm using `3.7-slim-buster` here just to save some time on download.
+For production use you should prefer plain `buster` image 
+
+---
+
 Everything should be familiar here. We use `python:3.7-slim-buster` as starter image.
 Then create and set `/opt/testapp` as workdir. Then copy `main.py` and `Pipfile` to work dir. 
 Command `RUN pip install pipenv` installs [PipEnv](https://pypi.org/project/pipenv/) virtual environment.
@@ -563,12 +570,13 @@ if __name__ == '__main__':
     print(logo.renderText("Hello Docker"))
 ```
 
-#### Advanced example. Python Flask App with MS ODBC Driver
-
 ---
 ***NOTE***:
 All demo apps available in `app` folder in this repository
+
 ---
+
+#### Advanced example. Python Flask App with MS ODBC Driver
 
 Sometimes we need additional soft in our projects that we have compile and install on every machine 
 to make our project work. Good example of such dependency is Microsoft ODBC for linux. 
