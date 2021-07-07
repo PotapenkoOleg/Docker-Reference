@@ -1,5 +1,5 @@
 # Docker-Reference
-Docker Reference for basic commands and Dokerfile examples
+Docker Reference for basic commands and Dockerfile examples
 
 ## Installing Docker
 
@@ -18,7 +18,7 @@ Additional information about Docker EE is [here](https://docker-docs.netlify.app
 
 Instructions how to install Docker Community Edition on CentOS/[Rocky Linux](https://rockylinux.org/) available [here](https://docker-docs.netlify.app/install/linux/docker-ce/centos/)
 
-Please note CentOS/[Rocky Linux](https://rockylinux.org/) 8+ has it's own implementation called [Podman](https://podman.io/)
+Please note CentOS/[Rocky Linux](https://rockylinux.org/) 8+ has its own implementation called [Podman](https://podman.io/)
 
 How to install [Podman](https://podman.io/getting-started/installation)
 
@@ -683,4 +683,54 @@ To be continued ...
 
 ## Docker Hub Basics
 
-To be continued ...
+When you finished creating and debugging your image it's time to distribute it.
+
+Basically 3 options here
+
+1. Distribute your app as source code in git repository and build image from Docker file on a target device
+
+
+2. Use image registry like [Docker Registry](https://docs.docker.com/registry/) or your Kubernetes registry
+
+
+3. Use third party Docker Image hosting like [Docker Hub](https://hub.docker.com/) 
+   or [Amazon Elastic Container Registry](https://aws.amazon.com/ecr/)
+   
+Building your image starts with `docker build` command and this command exactly the same for all options
+
+***Example***: Let's build our `DockerJavaTest` java application
+
+Command looks like this `docker build -t dockerjavatest:latest -t dockerjavatest:version-1.0.0 .`
+
+We assign two tags here `latest` and `version-1.0.0`. Please refer section 'tags'
+
+Also, please note dot `.` at the end which means 'current directory'
+
+From now, I'm going to use Docker Hub as image registry. 
+It provides 1 private repository after registration and unlimited public repositories
+
+As next step login into Docker Hub from console. Use `docker login` command. 
+Use `docker logout` if you already logged in
+
+After successful login you can `push` your image much like you push your work using `git push`
+
+To do so run `docker image ls` to check your image name
+
+Then run `docker tag dockerjavatest opotapenkoatssnc/dockerjavatest`
+Your local repository name is your image name, so it just `dockerjavatest`.
+My Docker Hub public account name is `opotapenkoatssnc` and `opotapenkoatssnc/dockerjavatest` 
+is my public repository name
+
+Now we can run `docker image ls` and see new repository `opotapenkoatssnc/dockerjavatest` with tag `latest'
+
+To push it run `docker push opotapenkoatssnc/dockerjavatest`. 
+Optionally you can add tag `docker push opotapenkoatssnc/dockerjavatest`
+
+You can assign tags to this new `opotapenkoatssnc/dockerjavatest` repository before pushing it
+
+Now you can download and run it locally using `docker run -it opotapenkoatssnc/dockerjavatest:latest`
+
+Docker Hub Repository available [here](https://hub.docker.com/r/opotapenkoatssnc/dockerjavatest) 
+
+Some tips available 
+[here](https://stackoverflow.com/questions/41984399/denied-requested-access-to-the-resource-is-denied-docker)
