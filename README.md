@@ -430,6 +430,7 @@ All you need to do is just create *Dokerfile* named `Dockerfile` (yes literally)
 You can create image for any application you want to not only for apps you develop yourself.
 For instance you can create image for [kafka](https://kafka.apache.org/) or [trino](https://trino.io/).
 Process is exactly the same
+
 ---
 
 Let's talk about Docker file format and basic commands
