@@ -42,7 +42,7 @@ You can install it following instructions [here](https://docs.docker.com/compose
 
 ---
 
-## Running your containers
+## Running containers
 
 ### Terminology
 
@@ -381,10 +381,297 @@ to connect to `postgres` database
 
 - Data, WALs and configs available on host machine in `C:\docker\postgres\pgdata` directory
 
-## Creating Docker images for your apps
+---
+***NOTE***: `${PWD}` is Windows PowerShell command that shows current directory.
+
+You can use command like this instead `docker run -d -p 8080:80 -v /c/docker:/var/www/html php:7.2-apache`
+
+---
+
+### Automatically restart containers
+
+Sometimes applications crash and services go down. 
+To avoid this situation you can use `--restart` option.
+
+---
+***NOTE***:
+If you set your Docker instance to automatically restart after reboot
+(please see section *installing Docker*), then it could even survive system restart.
+You don't need `shell` scripts and `crontab` to restart your service
+
+---
+
+| Argument       | Description                                                                               |
+| -------------- | ----------------------------------------------------------------------------------------- |
+| no             | This is the default value, it means that the containers would not be restarted            |
+| on-failure     | This would restart the container in case that there is an error and the container crashes |
+| always         | Always restart the container if it stops                                                  |
+| unless-stopped | The container would always be restarted unless it was manually stopped                    |
+
+Here is example how to automatically restart postgres instance with `--restart=on-failure` option
+```
+docker run -d \ 
+--name my-postgres \
+--restart=on-failure \
+-e POSTGRES_PASSWORD=secret \
+-e PGDATA=/var/lib/postgresql/data/pgdata \
+-v /c/docker/postgres:/var/lib/postgresql/data \
+-p 3333:5432 \
+postgres
+```
+
+## Creating Docker Images for Apps
+
+Real power of Docker comes with ability to create image for any application you would like to. 
+All you need to do is just create *Dokerfile* named `Dockerfile` (yes literally) and without extension    
+
+---
+***NOTE***:
+You can create image for any application you want to not only for apps you develop yourself.
+For instance you can create image for [kafka](https://kafka.apache.org/) or [trino](https://trino.io/).
+Process is exactly the same
+---
+
+Let's talk about Docker file format and basic commands
+
+Full description available [here](https://docs.docker.com/engine/reference/builder/#format)
+
+Here is minimal `Dockerfile` example for deploying `Hello world` java application
+
+```
+FROM amazoncorretto:11
+RUN mkdir /opt/DockerJavaTest
+WORKDIR /opt/DockerJavaTest
+COPY ./build/libs/DockerJavaTest-1.0-SNAPSHOT.jar ./
+CMD [ "java", "-jar", "DockerJavaTest-1.0-SNAPSHOT.jar" ]
+```
+
+File starts with [FROM](https://docs.docker.com/engine/reference/builder/#from) command.
+It selects *Base* image for you project from [Docker Hub](https://hub.docker.com/). 
+Most of the time you should prefer Debian Buster based image. 
+In this case we use 
+[Amazon Corretto version 11](https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/what-is-corretto-11.html)
+*Base* image which OpenJDK 11(current) implementation from Amazon with long term support (LTS).
+
+[RUN](https://docs.docker.com/engine/reference/builder/#run) 
+command executes command *inside* new image with permanent results. 
+In this case we create new work directory `/opt/DockerJavaTest` for our application.
+This step is optional, but its good idea to put your app in dedicated directory.
+Directory `/opt` on linux is for **opt**ional apps.
+
+[WORKDIR](https://docs.docker.com/engine/reference/builder/#workdir)
+command set any directory as root folder for all following commands.
+`/opt/DockerJavaTest` is our new root
+
+[COPY](https://docs.docker.com/engine/reference/builder/#copy)
+command copies our `Hello world` application into root folder.
+I assume we use `Gradle` as build system, so our `jar` file is here `./build/libs/DockerJavaTest-1.0-SNAPSHOT.jar`. 
+Please note we copy it to `./` root folder which is actually `/opt/DockerJavaTest` as we set it in previous step. 
+
+[CMD](https://docs.docker.com/engine/reference/builder/#cmd)
+command set our `jar` file as ***main*** executable process. 
+Command `CMD [ "java", "-jar", "DockerJavaTest-1.0-SNAPSHOT.jar" ]` has two parameters.
+First one `-jar` is standard JVM parameter. Second one is our app name.
+
+---
+***NOTE***:
+Difference between 
+[CMD](https://docs.docker.com/engine/reference/builder/#cmd) 
+and
+[ENTRYPOINT](https://docs.docker.com/engine/reference/builder/#entrypoint)
+
+CMD sets your process to be executed as demon/service 
+
+ENTRYPOINT allows you to provide arguments for interactive use 
+
+---
+
+### Demo. Compressing files with RAR using ENTRYPOINT command
+
+We can use [klutchell/rar](https://hub.docker.com/r/klutchell/rar) repository for this demo
+
+[klutchell](https://hub.docker.com/u/klutchell) is community user who shows how to pack some standard apps in containers
+
+Here is Docker file from his [GitHub](https://github.com/klutchell/docker-rar/blob/master/Dockerfile)
+
+```
+FROM alpine
+RUN apk add --no-cache make
+RUN wget http://www.rarlab.com/rar/rarlinux-5.4.0.tar.gz && \
+	tar -xzvf rarlinux-5.4.0.tar.gz && \
+	cd rar && \
+	make && \
+	mv rar_static /usr/local/bin/rar
+ENTRYPOINT ["rar"]
+```
+
+We can use dockerized rar like this 
+`docker run --rm -v ${PWD}:/files -w /files klutchell/rar a /files/index.rar /files/index.php`
+Before running this command `cd` to `c:\docker` then you should be able to compress `index.php`
+from previous demos with `rar`. Option `-w` sets working directory much like `[WORKDIR]` in `Dockerfile`.
+Parameters `a /files/index.rar /files/index.php` is `rar` archiver parameters and not a Docker ones
+
+### Creating images for Python apps
+
+Let's continue with more advanced examples involving Python package manages
+
+Here is sample `Dockerfile`
+
+```
+FROM python:3.7-slim-buster
+RUN mkdir /opt/testapp
+WORKDIR /opt/testapp
+COPY main.py ./
+COPY Pipfile ./
+RUN pip install pipenv
+RUN export PIPENV_PIPFILE=Pipfile
+RUN pipenv install
+CMD [ "pipenv", "run", "python", "./main.py" ]
+```
+
+Everything should be familiar here. We use `python:3.7-slim-buster` as starter image.
+Then create and set `/opt/testapp` as workdir. Then copy `main.py` and `Pipfile` to work dir. 
+Command `RUN pip install pipenv` installs [PipEnv](https://pypi.org/project/pipenv/) virtual environment.
+Commands `RUN export PIPENV_PIPFILE=Pipfile` and `RUN pipenv install` install dependencies from `Pipfile`. 
+Finally, we use `CMD [ "pipenv", "run", "python", "./main.py" ]` to run `python` from out virtual environment 
+to run our `main.py` script which prints message with fancy font on console.
+
+Pipfile
+```
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pyfiglet = "==0.7"
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"
+```
+
+main.py
+
+```
+from pyfiglet import Figlet
+
+if __name__ == '__main__':
+    logo = Figlet(font='slant')
+    print(logo.renderText("Hello Docker"))
+```
+
+#### Advanced example. Python Flask App with MS ODBC Driver
+
+---
+***NOTE***:
+All demo apps available in `app` folder in this repository
+---
+
+Sometimes we need additional soft in our projects that we have compile and install on every machine 
+to make our project work. Good example of such dependency is Microsoft ODBC for linux. 
+With Docker, you do this exercise only once when preparing `Dockerfile` and not on every server
+
+---
+***NOTE***:
+
+Here is information about [Python SQL Server Driver](https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/step-1-configure-development-environment-for-pyodbc-python-development?view=sql-server-ver15)
+
+Here is instruction how to install it [how to install it on linux](https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver15)
+
+---
+
+Here is full `Dockerfile` for demo [Flask](https://flask.palletsprojects.com/en/2.0.x/) application
+with MS ODBC Driver
+
+```
+FROM python:3.7-buster
+EXPOSE 8080
+RUN mkdir /opt/dockerflaskdemo
+WORKDIR /opt/dockerflaskdemo
+RUN mkdir logs
+RUN mkdir services
+RUN mkdir templates
+COPY app.py ./
+COPY Pipfile ./
+COPY services/*.py services/
+COPY templates/*.html templates/
+RUN pip install pipenv
+
+###########################################################################
+# ODBC DRIVER
+
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN apt-get update
+RUN ACCEPT_EULA=Y apt-get install -y msodbcsql17
+
+# optional: for bcp and sqlcmd
+RUN ACCEPT_EULA=Y apt-get install -y mssql-tools
+RUN export PATH="$PATH:/opt/mssql-tools/bin"
+RUN apt-get install -y unixodbc-dev
+RUN apt-get install -y libgssapi-krb5-2
+###########################################################################
+
+RUN export PIPENV_PIPFILE=Pipfile
+RUN pipenv install
+CMD [ "pipenv", "run", "gunicorn","-w 4","-b :8080", "app:app" ]
+```
+
+Here are some notes
+
+[EXPOSE](https://docs.docker.com/engine/reference/builder/#expose)
+command allows you to use container internal port with external host port 
+using `-p` option on `docker run`. 
+Basically it tells Docker that your app listens to this port
+
+Section `# ODBC DRIVER` just copied from official 
+[documentation](https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver15)
+as-is. This is the latest version for now, and it works with Python 3.7, 3.8, 3.9
+
+Command `CMD [ "pipenv", "run", "gunicorn","-w 4","-b :8080", "app:app" ]` starts production ready
+[Green Unicorn](https://gunicorn.org/) Python web server with 4 workers on port 8080.
+Instruction `app:app` tells gunicorn that variable `app` in module `app` is your Flask application
+
+---
+***NOTE***:
+Flask by default uses single-threaded development server.
+For production, you probably need production ready multi-threaded Python WSGI HTTP Server
+
+---
+
+---
+***NOTE***:
+Connection string in example above looks like this 
+```
+self.__connection_string = f'DRIVER={{ODBC Driver 17 for SQL Server}};' \
+                           f'SERVER=YOUR_SERVER_ADDRESS_HERE;' \
+                           f'DATABASE=YOUR_DATABASE_NAME_HERE;' \
+                           f'Uid=YOUR_USER_NAME_HERE;' \
+                           f'Pwd=YOUR_PASSWORD_HERE;' \
+                           f'Encrypt=no;'
+```
+Note that `ODBC Driver 17 for SQL Server` is version `17` now
+
+---
+
+### ***.dockerignore*** file
+
+When adding files to your image you should **not** copy some files.
+This may include `*.obj`, `*.class`, `__pycache__` and many other similar files.
+
+To achieve this just put `.dockerignore` file in the root of your project.
+It's also possible to put other `.dockerignore` files in subdirectories to clarify/correct copy rules.
+
+This file works just like `.gitignore` file if you familiar with `git`
+
+Full documentation available [here](https://docs.docker.com/engine/reference/builder/#dockerignore-file)
+
+## Docker Compose
 
 To be continued ...
 
-## Docker Compose
+## Docker Hub Basics
 
 To be continued ...
