@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  docker_python_test:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: docker_python_test
+    container_name: docker_python_test
+    restart: on-failure

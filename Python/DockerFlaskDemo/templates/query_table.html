@@ -1,0 +1,26 @@
+{% extends 'master.html' %}
+
+{% block head %}
+<title>Docker Flask Demo</title>
+{% endblock %}
+{% block content %}
+<h1>SQL Query</h1>
+<form method="POST" action="/process_table">
+    <table>
+        <tr>
+            <td>SQL Query
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <textarea id="query" name="query" rows="10" cols="100"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="> Run"></td>
+        </tr>
+    </table>
+</form>
+<br>
+<a href="{{ url_for('index') }}">Back</a>
+{% endblock %}

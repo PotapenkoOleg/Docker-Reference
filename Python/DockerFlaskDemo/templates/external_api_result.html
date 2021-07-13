@@ -1,0 +1,12 @@
+{% extends 'master.html' %}
+
+{% block head %}
+<title>Docker Flask Demo</title>
+{% endblock %}
+{% block content %}
+<h1>Hello World From Docker! </h1>
+<br/>
+<h2>{{ model }}</h2>
+<br/>
+<a href="{{ url_for('index') }}">Back</a>
+{% endblock %}

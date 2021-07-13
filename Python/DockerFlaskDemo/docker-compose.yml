@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  docker_flask_demo:
+    image: docker_flask_demo
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "2222:8080"
+    volumes:
+      - /c/docker/DockerFlaskDemo/logs/instance_1:/opt/dockerflaskdemo/logs
+    container_name: docker_flask_demo
+  postgres_database:
+    image: postgres:13.3-buster
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - "/c/docker/postgres:/var/lib/postgresql/data"
+    ports:
+      - "1111:5432"
+    container_name: postgres_database

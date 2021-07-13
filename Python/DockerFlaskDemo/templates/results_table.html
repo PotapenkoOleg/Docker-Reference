@@ -1,0 +1,34 @@
+{% extends 'master.html' %}
+
+{% block head %}
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+</style>
+<title>Docker Flask Demo</title>
+{% endblock %}
+
+{% block content %}
+<h1>SQL Query Results</h1>
+{% if model["query_error"] %}
+<h2>{{model["query_error_message"]}}</h2>
+{% else %}
+<table>
+    <tr>
+        {% for value in model["headers"] %}
+        <th>{{ value }}</th>
+        {% endfor %}
+    </tr>
+    {% for row in model["data"] %}
+    <tr>
+        {% for value in row %}
+        <td>{{ value }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+{% endblock %}

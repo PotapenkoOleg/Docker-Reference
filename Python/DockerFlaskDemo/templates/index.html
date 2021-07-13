@@ -1,0 +1,20 @@
+{% extends 'master.html' %}
+
+{% block head %}
+<title>Docker Flask Demo</title>
+{% endblock %}
+{% block content %}
+<h1>Hello World From Docker! </h1>
+<br/>
+<h2>{{ model["date"] }}</h2>
+<br/>
+<h2>{{ model["python_version"] }}</h2>
+<br/>
+<ul>
+    <li><a href="{{ url_for('external_api') }}">External API DEMO</a></li>
+    <li><a href="{{ url_for('query_table') }}">SQL Server Table DEMO</a></li>
+    <li><a href="{{ url_for('query_json') }}">SQL Server JSON DEMO</a></li>
+    <li><a href="{{ url_for('create_cookie_shop') }}">Create Cookie Shop</a></li>
+    <li><a href="{{ url_for('cookie_shop_list') }}">Cookie Shop</a></li>
+</ul>
+{% endblock %}

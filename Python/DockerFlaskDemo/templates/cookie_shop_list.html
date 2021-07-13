@@ -1,0 +1,25 @@
+{% extends 'master.html' %}
+
+{% block head %}
+<title>Docker Flask Demo</title>
+{% endblock %}
+{% block content %}
+<h1>Cookie Shop </h1>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+    </tr>
+    {% for row in model %}
+    <tr>
+        {% for value in row %}
+        <td>{{ value }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+<br>
+<a href="{{ url_for('add_cookie') }}">Add Cookie</a>
+<br>
+<a href="{{ url_for('index') }}">Back</a>
+{% endblock %}
