@@ -679,7 +679,112 @@ Full documentation available [here](https://docs.docker.com/engine/reference/bui
 
 ## Docker Compose
 
-To be continued ...
+*Docker compose* is technology that allows you to run several services with just one command.
+Also it allows you to create shared volumes used by number of images amd create virtual networks to connect 
+(and/or) isolate containers. This allows you to unlock paradigm ***infrastructure as a code***
+
+To create service descriptions you use [YAML](https://yaml.org/) files much like when working with Kubernetes.
+
+Current specification is version 3 and available
+[here](https://docs.docker.com/compose/compose-file/compose-file-v3/)
+
+---
+***NOTE***:
+Please don't use version 2, since it doesn't contain many important commands
+
+---
+
+Basically you need to create file called `docker-compose.yml` and put commands there you typically use
+with `docker run` command
+
+Here is example how to run Python Flask application along with Postrgres database
+
+```
+version: '3'
+
+services:
+  docker_flask_demo:
+    image: docker_flask_demo
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "2222:8080"
+    volumes:
+      - /c/docker/DockerFlaskDemo/logs/instance_1:/opt/dockerflaskdemo/logs
+    container_name: docker_flask_demo
+    
+  postgres_database:
+    image: postgres:13.3-buster
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - "/c/docker/postgres:/var/lib/postgresql/data"
+    ports:
+      - "1111:5432"
+    container_name: postgres_database
+```
+
+It starts with `services` section here you can add your containers
+
+Section `docker_flask_demo` describes **Flask** web app. 
+We build it from local `Dockerfile` in Python project and expose port `8080` 
+inside **container** as port `2222` on host machine. Also we mount `/opt/dockerflaskdemo/logs` 
+logs directory as `/c/docker/DockerFlaskDemo/logs/instance_1` on host **Windows** machine
+
+---
+***NOTE***:
+Dash `-` in YAML files means 'list'. You can add more entries in `ports` and `volumes` sections
+
+---
+
+Section `postgres_database` describes Postgres database for project as separate container.
+Section name `postgres_database` is Docker local virtual network **DNS** name. 
+You can use in connection strings like this `postgresql://postgres:postgres@postgres_database/postgres`
+here `@postgres_database` is a host name for database
+
+You can create shared volumes and virtual networks to isolate you apps. 
+For instance, you can setup NGINX as load balancer and create rule that
+redirects to two different instannces of your app with it's own database running on isolated virtual networks
+You can use CUSTOMER CODE to redirect to correct tenant database.
+
+Here is quick example how to run Postgres with setup like this
+
+```
+version: '3'
+
+services:
+  postgres_database_1:
+    image: postgres:13.3-buster
+    volumes:
+      - my-vol:/var/lib/postgresql/data"
+    ports:
+      - "1111:5432"
+    networks:
+      - app1_net
+    container_name: postgres_database_1
+    
+  postgres_database_2:
+    image: postgres:13.3-buster
+    ports:
+      - "1112:5432"
+    networks:
+      - app2_net
+    container_name: postgres_database_2
+
+volumes:
+  my-vol:
+    name: my-vol
+    
+networks:
+  app1_net:
+  app2_net:
+```
+We use `volumes` and `networks` here
 
 ## Docker Hub Basics
 
