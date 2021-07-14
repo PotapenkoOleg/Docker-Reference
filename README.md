@@ -786,6 +786,15 @@ networks:
 ```
 We use `volumes` and `networks` here
 
+### Docker compose commands
+
+Basically you use standard `docker compose up` command 
+in directory which contains `docker-compose.yml` file to start services
+
+To stop all services you can use `docker compose down` command
+
+Full docker compose CLI reference available [here](https://docs.docker.com/compose/reference/)
+
 ## Docker Hub Basics
 
 When you finished creating and debugging your image it's time to distribute it.
