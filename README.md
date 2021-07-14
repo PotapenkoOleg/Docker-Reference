@@ -2,34 +2,36 @@
 Docker Reference for basic commands and Dockerfile examples
 
 # Table of Contents
-1. [Scope](##1.Scope)
-2. [Installing Docker](##Installing Docker)
+1. [Scope](#Scope)
+2. [Installing Docker](#installing-docker)
 
-   2.1 [2.1 Windows Desktop](###2.1 Windows Desktop)
+   2.1 [Windows Desktop](#windows-desktop)
    
-   2.1 [Third Example](#third-example)
+   2.2 [Windows Server](#windows-server)
 
-   2.1 [Third Example](#third-example)
+   2.3 [Linux Server](#Linux Server)
+
+   2.4 [Additional steps on Linux Server](#additional-steps-on-linux-server)
 3. [Third Example](#third-example)
 4. [Fourth Example](#fourth-examplehttpwwwfourthexamplecom)
 
-## 1. Scope
+## Scope
 This technical introduction to Docker and quick reference for basic commands
 
-## 2. Installing Docker
+## Installing Docker
 
-### 2.1 Windows Desktop
+### Windows Desktop
 1. Install Docker Desktop from here [here](https://www.docker.com/products/docker-desktop)
 2. Install the Linux kernel update package from [here](https://docs.microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package)
 
 P.S. You don't need to follow the whole instructions in step 2, just go to step 4 and download package
 
-### 2.2. Windows Server
+### Windows Server
 Docker EE for Windows requires Windows Server **2016** or later
 
 Additional information about Docker EE is [here](https://docker-docs.netlify.app/install/windows/docker-ee/#install-docker-ee)
 
-### 2.3 Linux Server
+### Linux Server
 
 Instructions how to install Docker Community Edition on CentOS/[Rocky Linux](https://rockylinux.org/) available [here](https://docker-docs.netlify.app/install/linux/docker-ce/centos/)
 
