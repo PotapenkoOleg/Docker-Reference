@@ -1,20 +1,35 @@
 # Docker-Reference
 Docker Reference for basic commands and Dockerfile examples
 
-## Installing Docker
+# Table of Contents
+1. [Scope](##1.Scope)
+2. [Installing Docker](##Installing Docker)
 
-### Windows Desktop
+   2.1 [2.1 Windows Desktop](###2.1 Windows Desktop)
+   
+   2.1 [Third Example](#third-example)
+
+   2.1 [Third Example](#third-example)
+3. [Third Example](#third-example)
+4. [Fourth Example](#fourth-examplehttpwwwfourthexamplecom)
+
+## 1. Scope
+This technical introduction to Docker and quick reference for basic commands
+
+## 2. Installing Docker
+
+### 2.1 Windows Desktop
 1. Install Docker Desktop from here [here](https://www.docker.com/products/docker-desktop)
 2. Install the Linux kernel update package from [here](https://docs.microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package)
 
 P.S. You don't need to follow the whole instructions in step 2, just go to step 4 and download package
 
-### Windows Server
+### 2.2. Windows Server
 Docker EE for Windows requires Windows Server **2016** or later
 
 Additional information about Docker EE is [here](https://docker-docs.netlify.app/install/windows/docker-ee/#install-docker-ee)
 
-### Linux Server
+### 2.3 Linux Server
 
 Instructions how to install Docker Community Edition on CentOS/[Rocky Linux](https://rockylinux.org/) available [here](https://docker-docs.netlify.app/install/linux/docker-ce/centos/)
 
@@ -838,7 +853,7 @@ is my public repository name
 Now we can run `docker image ls` and see new repository `opotapenkoatssnc/dockerjavatest` with tag `latest'
 
 To push it run `docker push opotapenkoatssnc/dockerjavatest`. 
-Optionally you can add tag `docker push opotapenkoatssnc/dockerjavatest`
+Optionally you can add tag `docker push opotapenkoatssnc/dockerjavatest:latest`
 
 You can assign tags to this new `opotapenkoatssnc/dockerjavatest` repository before pushing it
 
