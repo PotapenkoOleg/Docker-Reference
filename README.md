@@ -2,17 +2,24 @@
 Docker Reference for basic commands and Dockerfile examples
 
 # Table of Contents
-1. [Scope](#Scope)
+1. [Scope](#scope)
 2. [Installing Docker](#installing-docker)
 
    2.1 [Windows Desktop](#windows-desktop)
    
    2.2 [Windows Server](#windows-server)
 
-   2.3 [Linux Server](#Linux Server)
+   2.3 [Linux Server](#linux-server)
 
    2.4 [Additional steps on Linux Server](#additional-steps-on-linux-server)
-3. [Third Example](#third-example)
+
+   2.4 [Install Docker Compose on Linux](#install-docker-compose-on-linux)
+3. [Running containers](#running-containers)
+
+   3.1 [Terminology](#terminology)
+
+   3.2 [Demo. Running Ubuntu in interactive mode](#demo-running-ubuntu-in-interactive-mode)
+   
 4. [Fourth Example](#fourth-examplehttpwwwfourthexamplecom)
 
 ## Scope
@@ -101,7 +108,7 @@ Let start with some basic terminology and ideas behind Docker
 
 - Most Docker images use `root` user by default, so you don't need elevation inside your container
 
-### Demo. Running *Ubuntu* in interactive mode
+### Demo. Running Ubuntu in interactive mode
 
 `docker run -it ubuntu /bin/bash`
 
