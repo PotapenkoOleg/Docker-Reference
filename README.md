@@ -13,14 +13,29 @@ Docker Reference for basic commands and Dockerfile examples
 
    2.4 [Additional steps on Linux Server](#additional-steps-on-linux-server)
 
-   2.4 [Install Docker Compose on Linux](#install-docker-compose-on-linux)
+   2.5 [Install Docker Compose on Linux](#install-docker-compose-on-linux)
 3. [Running containers](#running-containers)
 
    3.1 [Terminology](#terminology)
 
    3.2 [Demo. Running Ubuntu in interactive mode](#demo-running-ubuntu-in-interactive-mode)
-   
-4. [Fourth Example](#fourth-examplehttpwwwfourthexamplecom)
+
+   3.3 [Demo. Using basic Docker commands](#demo-using-basic-docker-commands)
+
+   3.4 [Fantastic Images and Where to Find Them](#fantastic-images-and-where-to-find-them)
+
+   3.5 [Common starter images and which one I should choose](#common-starter-images-and-which-one-i-should-choose)
+
+   3.6 [Tags and Image names](#tags-and-image-names)
+
+   3.7 [Port Forwarding and Volumes](#port-forwarding-and-volumes)
+
+   3.8 [Demo. Using Apache with PHP](#demo-using-apache-with-php)
+
+   3.9 [Demo. Running Postgres database in Docker](#demo-running-postgres-database-in-docker)
+
+   3.10 [Automatically restart containers](#Automatically restart containers)
+4. [Creating Docker Images for Apps](#creating-docker-images-for-apps)
 
 ## Scope
 This technical introduction to Docker and quick reference for basic commands
@@ -283,7 +298,7 @@ So you never get error because `stdlib.so` is missing
 
 ---
 
-### Tags and image names
+### Tags and Image names
 
 Each image can have multiple names known as 'tags' in addition to image hash that uniquely identifies image.
 
@@ -304,8 +319,8 @@ Currently, only one private repository available for registered users.
 
 ### Port Forwarding and Volumes
 
-Nowadays most server-side applications are web-apps and they should expose some ports for end users.
-Also we always need some data to be stored between application restarts.
+Nowadays most server-side applications are web-apps, and they should expose some ports for end users.
+Also, we always need some data to be stored between application restarts.
 It could include config files, logs and many other things.
 
 #### Port Forwarding
@@ -356,7 +371,7 @@ You can use command like this instead `docker run -d -p 8080:80 -v /c/docker:/va
   You should see information about PHP version
 
 
-### Demo. Running postgres database in Docker
+### Demo. Running Postgres database in Docker
 
 This time we're going to run [postgres](https://hub.docker.com/_/postgres) database as docker **container** 
 
