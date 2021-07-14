@@ -56,7 +56,7 @@ Docker Reference for basic commands and Dockerfile examples
 
 ## Scope
 
-This technical introduction to Docker and quick reference for basic commands
+This is technical introduction to Docker and quick reference for basic commands
 
 ## Installing Docker
 
@@ -102,8 +102,6 @@ Last step allows your containers survive system crash/restart
 By default linux install doesn't contain Docker Compose
 
 You can install it following instructions [here](https://docs.docker.com/compose/install/)
-
----
 
 ## Running containers
 
@@ -504,7 +502,7 @@ File starts with [FROM](https://docs.docker.com/engine/reference/builder/#from) 
 project from [Docker Hub](https://hub.docker.com/). Most of the time you should prefer Debian Buster based image. In
 this case we use
 [Amazon Corretto version 11](https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/what-is-corretto-11.html)
-*Base* image which OpenJDK 11(current) implementation from Amazon with long term support (LTS).
+Base image which is OpenJDK 11(current) implementation from Amazon with long term support (LTS).
 
 [RUN](https://docs.docker.com/engine/reference/builder/#run)
 command executes command *inside* new image with permanent results. In this case we create new work
@@ -513,7 +511,7 @@ dedicated directory. Directory `/opt` on linux is for optional apps.
 
 [WORKDIR](https://docs.docker.com/engine/reference/builder/#workdir)
 command set any directory as root folder for all following commands.
-`/opt/DockerJavaTest` is our new root
+Directory `/opt/DockerJavaTest` is our new root.
 
 [COPY](https://docs.docker.com/engine/reference/builder/#copy)
 command copies our `Hello world` application into root folder. I assume we use `Gradle` as build system, so our `jar`
@@ -540,7 +538,7 @@ ENTRYPOINT allows you to provide arguments for interactive use
 
 ### Demo. Compressing files with RAR using ENTRYPOINT command
 
-We can use [klutchell/rar](https://hub.docker.com/r/klutchell/rar) repository for this demo
+We will use [klutchell/rar](https://hub.docker.com/r/klutchell/rar) repository for this demo
 
 [klutchell](https://hub.docker.com/u/klutchell) is community user who shows how to pack some standard apps in containers
 
@@ -565,7 +563,7 @@ Parameters `a /files/index.rar /files/index.php` is `rar` archiver parameters an
 
 ### Creating Images for Python apps
 
-Let's continue with more advanced examples involving Python package manages
+Let's continue with more advanced examples involving Python package manager
 
 Here is sample `Dockerfile`
 
@@ -624,15 +622,15 @@ if __name__ == '__main__':
 
 ---
 ***NOTE***:
-All demo apps available in `app` folder in this repository
+All demo apps available in root folder in this repository
 
 ---
 
 #### Advanced example. Python Flask App with MS ODBC Driver
 
 Sometimes we need additional soft in our projects that we have compile and install on every machine to make our project
-work. Good example of such dependency is Microsoft ODBC for linux. With Docker, you do this exercise only once when
-preparing `Dockerfile` and not on every server
+work. Good example of such dependency is Microsoft ODBC driver for linux. With Docker, you do this exercise only once 
+when preparing `Dockerfile` and not on every server
 
 ---
 ***NOTE***:
@@ -645,7 +643,7 @@ it [how to install it on linux](https://docs.microsoft.com/en-us/sql/connect/odb
 
 ---
 
-Here is full `Dockerfile` for demo [Flask](https://flask.palletsprojects.com/en/2.0.x/) application with MS ODBC Driver
+Here is full `Dockerfile` for demo [Flask](https://flask.palletsprojects.com/en/2.0.x/) application with MS ODBC driver
 
 ```
 FROM python:3.7-buster
@@ -734,7 +732,7 @@ Full documentation available [here](https://docs.docker.com/engine/reference/bui
 ## Docker Compose
 
 *Docker compose* is technology that allows you to run several services with just one command. 
-Also, it allows you to create shared volumes used by number of images amd create virtual networks to connect
+Also, it allows you to create shared volumes used by number of images and create virtual networks to connect
 (and/or) isolate containers. This allows you to unlock paradigm ***infrastructure as a code***
 
 To create service descriptions you use [YAML](https://yaml.org/) files much like when working with Kubernetes.
@@ -802,8 +800,8 @@ this `postgresql://postgres:postgres@postgres_database/postgres`
 here `@postgres_database` is a host name for database
 
 You can create shared volumes and virtual networks to isolate you apps. For instance, you can set up NGINX as load
-balancer and create rule that redirects to two different instances of your app. AAnd each instance with its own database 
-running on isolated virtual network. You can use CUSTOMER CODE to redirect to correct tenant database.
+balancer and create rule that redirects to two different instances of your app. Each instance will use its own database 
+running on isolated virtual network. You can use `%CUSTOMER_CODE%` as HTTP Header to redirect to correct tenant database.
 
 Here is quick example how to run Postgres with setup like this
 
@@ -838,7 +836,7 @@ networks:
   app2_net:
 ```
 
-We use `volumes` and `networks` here
+We use `volumes` and `networks` sections here, not only `services`
 
 ### Docker Compose commands
 
@@ -874,8 +872,8 @@ We assign two tags here `latest` and `version-1.0.0`. Please refer section 'tags
 
 Also, please note dot `.` at the end which means 'current directory'
 
-From now, I'm going to use Docker Hub as image registry. It provides 1 private repository after registration and
-unlimited public repositories
+From now, I'm going to use **Docker Hub** as image registry. Currently, it provides 1 private repository 
+after registration and unlimited public repositories
 
 As next step login into Docker Hub from console. Use `docker login` command. Use `docker logout` if you already logged
 in
@@ -889,10 +887,10 @@ Your local repository name is your image name, so it just `dockerjavatest`. My D
 is `opotapenkoatssnc` and `opotapenkoatssnc/dockerjavatest`
 is my public repository name
 
-Now we can run `docker image ls` and see new repository `opotapenkoatssnc/dockerjavatest` with tag `latest'
+Now we can run `docker image ls` and see new repository `opotapenkoatssnc/dockerjavatest` with tag `latest`
 
-To push it run `docker push opotapenkoatssnc/dockerjavatest`. Optionally you can add
-tag `docker push opotapenkoatssnc/dockerjavatest:latest`
+To push image to Docker Hub run `docker push opotapenkoatssnc/dockerjavatest`. 
+Optionally you can add tag `docker push opotapenkoatssnc/dockerjavatest:latest`
 
 You can assign tags to this new `opotapenkoatssnc/dockerjavatest` repository before pushing it
 
@@ -902,3 +900,5 @@ Docker Hub Repository available [here](https://hub.docker.com/r/opotapenkoatssnc
 
 Some tips available
 [here](https://stackoverflow.com/questions/41984399/denied-requested-access-to-the-resource-is-denied-docker)
+
+## That's All Folks. Thanks for reading
