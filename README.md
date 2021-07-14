@@ -123,9 +123,9 @@ Let start with some basic terminology and ideas behind Docker
 
 - Docker image consist of many layers like onion or Russian Doll. For instance, you can add MySql database to basic
   Debian image, then add Apache, then PHP and finally add your Application to this image. It's not uncommon to have
-  images with 33+ layers. But remember - Docker runs only ***one*** process, so ***never*** add ***all*** dependencies to
-  your image. In example above your ***container*** would be broken if MySql would stop. Having MySql as separate ***
-  container*** is **always** safe bet
+  images with 33+ layers. But remember - Docker runs only ***one*** process, so ***never*** add ***all*** dependencies 
+  to your image. In example above your ***container*** would be broken if MySql would stop. 
+  Having MySql as separate ***container*** is **always** safe bet
 
 
 - Docker can be used in two modes. First is ***interactive*** used primary for debugging and second is ***demon*** mode
