@@ -128,7 +128,7 @@ Let start with some basic terminology and ideas behind Docker
   Having MySql as separate ***container*** is **always** safe bet
 
 
-- Docker can be used in two modes. First is ***interactive*** used primary for debugging and second is ***demon*** mode
+- Docker can be used in two modes. First is ***interactive*** used primary for debugging and second is ***daemon*** mode
   for services like web server
 
 
