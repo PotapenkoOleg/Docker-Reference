@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Kotlin Spring Boot Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>Cookie Shop </h1>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+    </tr>
+    <tr th:each="cookie: ${cookies}">
+        <td th:text="${cookie.getCookieName()}"></td>
+        <td th:text="${cookie.getQuantity()}"></td>
+    </tr>
+</table>
+<br>
+<a th:href="@{/addcookie}">Add Cookie</a>
+<br>
+<a th:href="@{/}">Back</a>
+</body>
+</html>

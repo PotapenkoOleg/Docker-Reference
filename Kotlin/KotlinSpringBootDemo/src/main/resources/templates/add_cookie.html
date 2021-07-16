@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Kotlin Spring Boot Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>Add Cookie</h1>
+
+<form action="#" th:action="@{/addcookie}" th:object="${cookie}" method="post">
+
+    <table>
+        <tr>
+            <td>
+                <label for="cookieName">Cookie Name:</label>
+            </td>
+            <td>
+                <input type="text" id="cookieName" th:field="*{cookieName}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="cookieRecipeUrl">Cookie Recipe Url:</label>
+            </td>
+            <td>
+                <input type="text" id="cookieRecipeUrl" th:field="*{cookieRecipeUrl}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="cookieSku">Cookie SKU:</label>
+            </td>
+            <td>
+                <input type="text" id="cookieSku" th:field="*{cookieSku}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="quantity">Quantity:</label>
+            </td>
+            <td>
+                <input type="text" id="quantity" th:field="*{quantity}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="unitCost">Unit Cost:</label>
+            </td>
+            <td>
+                <input type="text" id="unitCost" th:field="*{unitCost}"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Submit"></td>
+        </tr>
+    </table>
+</form>
+
+<h1>Add Cookie</h1>
+</body>
+</html>
