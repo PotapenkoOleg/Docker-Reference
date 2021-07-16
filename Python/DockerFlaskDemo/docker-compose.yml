@@ -2,6 +2,8 @@ version: '3'
 
 services:
   docker_flask_demo:
+    depends_on:
+      - postgres_database
     image: docker_flask_demo
     restart: always
     build:
