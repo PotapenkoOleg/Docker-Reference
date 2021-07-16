@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  docker_node_test:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: docker_node_test
+    container_name: docker_node_test
+    restart: on-failure
+    ports:
+      - "4444:3000"
